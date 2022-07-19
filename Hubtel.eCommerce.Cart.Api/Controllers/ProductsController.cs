@@ -23,16 +23,16 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
 
         // GET: api/Products
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
+        public async Task<ActionResult<IEnumerable<Item>>> GetProducts()
         {
-            return await _context.Products.ToListAsync();
+            return await _context.Items.ToListAsync();
         }
 
         // GET: api/Products/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Product>> GetProduct(int id)
+        public async Task<ActionResult<Item>> GetProduct(int id)
         {
-            var product = await _context.Products.FindAsync(id);
+            var product = await _context.Items.FindAsync(id);
 
             if (product == null)
             {
@@ -46,7 +46,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutProduct(int id, Product product)
+        public async Task<IActionResult> PutProduct(int id, Item product)
         {
             if (id != product.Id)
             {
@@ -78,9 +78,9 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Product>> PostProduct(Product product)
+        public async Task<ActionResult<Item>> PostProduct(Item product)
         {
-            _context.Products.Add(product);
+            _context.Items.Add(product);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetProduct", new { id = product.Id }, product);
@@ -88,15 +88,15 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
 
         // DELETE: api/Products/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Product>> DeleteProduct(int id)
+        public async Task<ActionResult<Item>> DeleteProduct(int id)
         {
-            var product = await _context.Products.FindAsync(id);
+            var product = await _context.Items.FindAsync(id);
             if (product == null)
             {
                 return NotFound();
             }
-
-            _context.Products.Remove(product);
+            product.DeletedAt = DateTime.Now;
+            _context.Items.Update(product);
             await _context.SaveChangesAsync();
 
             return product;
@@ -104,7 +104,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
 
         private bool ProductExists(int id)
         {
-            return _context.Products.Any(e => e.Id == id);
+            return _context.Items.Any(e => e.Id == id);
         }
     }
 }

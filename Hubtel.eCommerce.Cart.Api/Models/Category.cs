@@ -25,6 +25,6 @@ namespace Hubtel.eCommerce.Cart.Api.Models
         public DateTime? CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
         public DateTime? DeletedAt { get; set; }
-        public virtual List<Product> Products { get; set; }
+        public virtual List<Item> Products { get; set; }
     }
 }

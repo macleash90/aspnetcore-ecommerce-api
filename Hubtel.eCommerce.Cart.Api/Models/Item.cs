@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Hubtel.eCommerce.Cart.Api.Models
 {
-    public class Product
+    public class Item
     {
-        public Product()
+        public Item()
         {
             CreatedAt = DateTime.Now;
             UpdatedAt = DateTime.Now;
@@ -17,10 +17,10 @@ namespace Hubtel.eCommerce.Cart.Api.Models
         [Key]
         public int Id { get; set; }
 
-        [Required, StringLength(100), Display(Name = "Product Name")]
+        [Required, StringLength(100), Display(Name = "Item Name")]
         public string Name { get; set; }
 
-        [StringLength(10000), Display(Name = "Product Description")]
+        [StringLength(10000), Display(Name = "Item Description")]
         public string Description { get; set; }
 
         public string ImagePath { get; set; }

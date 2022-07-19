@@ -67,7 +67,7 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
                 }
                 else
                 {
-                    throw;
+                    return BadRequest( new { message ="Something went wrong" });
                 }
             }
 
@@ -95,8 +95,8 @@ namespace Hubtel.eCommerce.Cart.Api.Controllers
             {
                 return NotFound();
             }
-
-            _context.Categories.Remove(category);
+            category.DeletedAt = DateTime.Now;
+            _context.Categories.Update(category);
             await _context.SaveChangesAsync();
 
             return category;
